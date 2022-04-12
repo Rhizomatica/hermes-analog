@@ -16,7 +16,6 @@ import datetime
 import configparser
 import sys
 import Hamlib
-from rtlsdr import RtlSdr
 import numpy as np
 import math
 
@@ -25,6 +24,7 @@ CTRX=None
 config = configparser.ConfigParser()
 config.read('UHRR.conf')
 e="No"
+
 
 ############ Global functions ##################################
 def writte_log(logmsg):
@@ -40,25 +40,8 @@ class BaseHandler(tornado.web.RequestHandler):
 		return self.get_secure_cookie("user")
 
 ############ Generate and send FFT from RTLSDR ##############
-is_rtlsdr_present = True
+is_rtlsdr_present = False
 
-try:
-	FFTSIZE=4096
-	nbBuffer=24
-	nbsamples=nbBuffer/2*FFTSIZE
-	ptime=nbsamples/int(config['PANADAPTER']['sample_rate'])
-	sdr_windows = eval("np."+config['PANADAPTER']['fft_window']+ "(FFTSIZE)") 
-	fftpaquetlen=int(FFTSIZE*8/2048)
-	sdr = RtlSdr()
-	sdr.sample_rate = int(config['PANADAPTER']['sample_rate']) # Hz
-	sdr.center_freq = int(config['PANADAPTER']['center_freq']) # Hz
-	sdr.freq_correction = int(config['PANADAPTER']['freq_correction']) # PPM
-	sdr.gain = int(config['PANADAPTER']['gain']) #or 'auto'
-except:
-	is_rtlsdr_present = False
-	
-
-	
 AudioPanaHandlerClients = []
 
 class loadFFTdata(threading.Thread):
@@ -210,7 +193,13 @@ class loadWavdata(threading.Thread):
 	def __init__(self):
 		global flagWavstart
 		threading.Thread.__init__(self)
-		self.inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NORMAL, channels=1, rate=8000, format=alsaaudio.PCM_FORMAT_FLOAT_LE, periodsize=256, device=config['AUDIO']['inputdevice'])
+		self.inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NORMAL, device=config['AUDIO']['inputdevice'])
+#		self.inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NORMAL, device="default")
+		self.inp.setchannels(1)
+		self.inp.setrate(8000)
+		self.inp.setformat(alsaaudio.PCM_FORMAT_FLOAT_LE)
+		self.inp.setperiodsize(256)
+#		self.inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE, alsaaudio.PCM_NORMAL, channels=1, rate=8000, format=alsaaudio.PCM_FORMAT_FLOAT_LE, periodsize=256, device=config['AUDIO']['inputdevice'])
 		print('recording...')
 
 	def run(self):
@@ -285,8 +274,15 @@ class WS_AudioTXHandler(tornado.websocket.WebSocketHandler):
 		self.frame_size = op_frm_dur * op_rate
 
 		device = config['AUDIO']['outputdevice']
-		self.inp = alsaaudio.PCM(alsaaudio.PCM_PLAYBACK, alsaaudio.PCM_NONBLOCK, channels=1, rate=itrate, format=alsaaudio.PCM_FORMAT_S16_LE, periodsize=2048, device=device)		
-	
+
+		self.inp = alsaaudio.PCM(alsaaudio.PCM_PLAYBACK, alsaaudio.PCM_NONBLOCK,device=device)
+		self.inp.setchannels(1)
+		self.inp.setrate(itrate)
+		self.inp.setformat(alsaaudio.PCM_FORMAT_S16_LE)
+		self.inp.setperiodsize(2048)
+
+#		self.inp = alsaaudio.PCM(alsaaudio.PCM_PLAYBACK, alsaaudio.PCM_NONBLOCK, channels=1, rate=itrate, format=alsaaudio.PCM_FORMAT_S16_LE, periodsize=2048, device=device) 
+
 	def open(self):
 		global last_AudioTXHandler_msg_time, AudioTXHandlerClients
 		if self not in AudioTXHandlerClients:
@@ -334,33 +330,7 @@ class TRXRIG:
 		self.infos = {}
 		self.infos["PTT"]=False
 		self.infos["powerstat"]=False
-		self.serialport = Hamlib.hamlib_port_parm_serial
-		self.serialport.rate=config['HAMLIB']['rig_rate']
-		try:
-			Hamlib.rig_set_debug(Hamlib.RIG_DEBUG_NONE)
-			self.rig_model = "RIG_MODEL_"+str(config['HAMLIB']['rig_model'])
-			self.rig_pathname = config['HAMLIB']['rig_pathname']
-			self.rig = Hamlib.Rig(Hamlib.__dict__[self.rig_model])  # Look up the model's numerical index in Hamlib's symbol dictionary.
-			self.rig.set_conf("rig_pathname", self.rig_pathname)
-			if(config['HAMLIB']['rig_rate']!=""):
-				self.rig.set_conf("serial_speed", str(config['HAMLIB']['rig_rate']))
-			if(config['HAMLIB']['data_bits']!=""): 
-				self.rig.set_conf("data_bits", str(config['HAMLIB']['data_bits'])) #8 as default
-			if(config['HAMLIB']['stop_bits']!=""):
-				self.rig.set_conf("stop_bits", str(config['HAMLIB']['stop_bits'])) #2 as default
-			if(config['HAMLIB']['serial_parity']!=""):
-				self.rig.set_conf("serial_parity", str(config['HAMLIB']['serial_parity']))# None as default NONE ODD EVEN MARK SPACE
-			if(config['HAMLIB']['serial_handshake']!=""):
-				self.rig.set_conf("serial_handshake", str(config['HAMLIB']['serial_handshake'])) # None as default NONE XONXOFF HARDWARE 
-			if(config['HAMLIB']['dtr_state']!=""):
-				self.rig.set_conf("dtr_state", str(config['HAMLIB']['dtr_state'])) #ON or OFF
-			if(config['HAMLIB']['rts_state']!=""):
-				self.rig.set_conf("rts_state", str(config['HAMLIB']['rts_state'])) #ON or OFF
-			self.rig.set_conf("retry", config['HAMLIB']['retry'])
-			self.rig.open()
-		except:
-			print("Could not open a communication channel to the rig via Hamlib!")
-		
+
 		self.setPower(1)
 		self.getvfo()
 		self.getFreq()
@@ -375,40 +345,50 @@ class TRXRIG:
 		
 	def getvfo(self):
 		try:
-			self.infos["VFO"] = (self.rig.get_vfo())
+			print("TODO VFO")
+			self.infos["VFO"] = "0"
+			#self.infos["VFO"] = (self.rig.get_vfo())
 		except:
 			print("Could not obtain the current VFO via Hamlib!")
 		return self.infos["VFO"]
 
 	def setFreq(self,frequency):
 		try:
-			self.rig.set_freq(Hamlib.RIG_VFO_CURR, float(frequency))
-			self.getFreq()
+			print("TODO setFREQ")
+#			self.rig.set_freq(Hamlib.RIG_VFO_CURR, float(frequency))
+#			self.getFreq()
+			self.infos["FREQ"] = "0"
 		except:
 			print("Could not set the frequency via Hamlib!")
 		return self.infos["FREQ"]
 		
 	def getFreq(self):
 		try:
-			self.infos["FREQ"] = (int(self.rig.get_freq()))
+			print("TODO getFREQ")
+#			self.infos["FREQ"] = (int(self.rig.get_freq()))
+			self.infos["FREQ"] = "0"
 		except:
 			print("Could not obtain the current frequency via Hamlib!")
 		return self.infos["FREQ"]
 		
 	def setMode(self,MODE):
 		try:
-		    
-			self.rig.set_mode(Hamlib.rig_parse_mode(MODE))
-			self.getMode()
+			print("TODO setMODE")
+			self.infos["MODE"] = "LSB"
+#			self.rig.set_mode(Hamlib.rig_parse_mode(MODE))
+#			self.getMode()
 		except:
 			print("Could not set the mode via Hamlib!")
 		return self.infos["MODE"]
 		
 	def getMode(self):
 		try:
-			(mode, width) = self.rig.get_mode()
-			self.infos["MODE"] = Hamlib.rig_strrmode(mode).upper()
-			self.infos["WIDTH"] = width
+			print("TODO getMODE")
+			self.infos["MODE"] = "LSB"
+			self.infos["WIDTH"] = "3"
+#			(mode, width) = self.rig.get_mode()
+#			self.infos["MODE"] = Hamlib.rig_strrmode(mode).upper()
+#			self.infos["WIDTH"] = width
 		except:
 			print("Could not obtain the current Mode via Hamlib!")
 		return self.infos["MODE"]
@@ -416,8 +396,9 @@ class TRXRIG:
 
 	def getStrgLVL(self):
 		try:
-			self.infos["StrgLVLi"] = self.rig.get_level_i(Hamlib.RIG_LEVEL_STRENGTH)
-			self.infos["StrgLVL"] = self.parsedbtospoint(self.infos["StrgLVLi"])
+			print("TODO: getStrgLVL")
+			# self.infos["StrgLVLi"] = self.rig.get_level_i(Hamlib.RIG_LEVEL_STRENGTH)
+			# self.infos["StrgLVL"] = self.parsedbtospoint(self.infos["StrgLVLi"])
 		except:
 			print("Could not obtain the current Strength signal RX level via Hamlib!")
 		return self.infos["StrgLVL"]
@@ -425,10 +406,10 @@ class TRXRIG:
 	def setPTT(self,status):
 		try:
 			if status == "true":
-				self.rig.set_ptt(Hamlib.RIG_VFO_CURR,Hamlib.RIG_PTT_ON)
+				# self.rig.set_ptt(Hamlib.RIG_VFO_CURR,Hamlib.RIG_PTT_ON)
 				self.infos["PTT"]=True
 			else:
-				self.rig.set_ptt(Hamlib.RIG_VFO_CURR,Hamlib.RIG_PTT_OFF)
+				# self.rig.set_ptt(Hamlib.RIG_VFO_CURR,Hamlib.RIG_PTT_OFF)
 				self.infos["PTT"]=False
 		except:
 			print("Could not set the mode via Hamlib!")
@@ -440,10 +421,12 @@ class TRXRIG:
 	def setPower(self,status=1):
 		try:
 			if status:
-				self.rig.set_powerstat(Hamlib.RIG_POWER_ON)
+				self.infos["powerstat"] = True
+#				self.rig.set_powerstat(Hamlib.RIG_POWER_ON)
 			else:
-				self.rig.set_powerstat(Hamlib.RIG_POWER_OFF)
-			self.infos["powerstat"] = status
+				self.infos["powerstat"] = False
+#				self.rig.set_powerstat(Hamlib.RIG_POWER_OFF)
+#			self.infos["powerstat"] = status
 		except:
 			print("Could not set power status via Hamlib!")
 		return self.infos["powerstat"]
@@ -477,10 +460,10 @@ class WS_ControlTRX(tornado.websocket.WebSocketHandler):
 		tornado.ioloop.IOLoop.instance().add_timeout(datetime.timedelta(seconds=float(config['CTRL']['interval_smeter_update'])), self.sendPTINFOS)
 
 	def open(self):
-		if self not in ControlTRXHandlerClients:
-			ControlTRXHandlerClients.append(self)
-			self.StrgLVL=0
-			self.sendPTINFOS()
+#		if self not in ControlTRXHandlerClients:
+#			ControlTRXHandlerClients.append(self)
+#			self.StrgLVL=0
+#			self.sendPTINFOS()
 		CTRX.setPower(1)
 		print('new connection on ControlTRX socket.')
 		if(is_rtlsdr_present):
@@ -663,29 +646,6 @@ class ConfigHandler(BaseHandler):
 		self.write("""<option value=\"OFF\">OFF</option>""")
 		self.write("""</select> Leave blank to use the HAMIB default value.<br/><br/>""")
 
-		self.write("""[PANADAPTER]<br/><br/>""")
-		self.write("""PANADAPTER FI frequency (hz):<input type="text" name="PANADAPTER.center_freq" value="""+config['PANADAPTER']['center_freq']+"""><br/><br/>""")
-		
-		self.write("""HAMLIB radio rate (samples/s):<select name="PANADAPTER.sample_rate">""")
-		if(config['PANADAPTER']['sample_rate']!=""):
-			self.write("""<option value="""+config['PANADAPTER']['sample_rate']+""" selected>"""+config['PANADAPTER']['sample_rate']+"""</option>""")
-		self.write("""<option value=3200000>3200000</option>""")
-		self.write("""<option value=2880000>2880000</option>""")
-		self.write("""<option value=2400000>2400000</option>""")
-		self.write("""<option value=1800000>1800000</option>""")
-		self.write("""<option value=1440000>1440000</option>""")
-		self.write("""<option value=1200000>1200000</option>""")
-		self.write("""<option value=1020000>1020000</option>""")
-		self.write("""<option value=960000>960000</option>""")
-		self.write("""</select><br/><br/>""")
-		
-		self.write("""PANADAPTER frequency correction (ppm):<input type="text" name="PANADAPTER.freq_correction" value="""+config['PANADAPTER']['freq_correction']+"""><br/><br/>""")
-
-		self.write("""PANADAPTER initial gain:<input type="text" name="PANADAPTER.gain" value="""+config['PANADAPTER']['gain']+"""><br/><br/>""")
-		
-		self.write("""PANADAPTER windowing:<select name="PANADAPTER.fft_window">""")
-		if(config['PANADAPTER']['fft_window']!=""):
-			self.write("""<option value="""+config['PANADAPTER']['fft_window']+""" selected>"""+config['PANADAPTER']['fft_window']+"""</option>""")
 		self.write("""<option value="bartlett">bartlett</option>""")
 		self.write("""<option value="blackman">blackman</option>""")
 		self.write("""<option value="hamming">hamming</option>""")
@@ -778,18 +738,19 @@ if __name__ == "__main__":
 		if is_rtlsdr_present:
 			threadFFT = loadFFTdata()
 			threadFFT.start()
-			
+
 		threadloadWavdata = loadWavdata()
 		threadloadWavdata.start()
-		
+
+
 		CTRX = TRXRIG()
 		
-		threadticksTRXRIG = ticksTRXRIG()
-		threadticksTRXRIG.start()
+#		threadticksTRXRIG = ticksTRXRIG()
+#		threadticksTRXRIG.start()
 		
-		if(config['HAMLIB']['trxautopower']=="True"):
-			threadsurveilTRX = threadtimeoutTRXshutdown()
-			threadsurveilTRX.start()
+#		if(config['HAMLIB']['trxautopower']=="True"):
+#			threadsurveilTRX = threadtimeoutTRXshutdown()
+#			threadsurveilTRX.start()
 		
 		
 		app = tornado.web.Application([

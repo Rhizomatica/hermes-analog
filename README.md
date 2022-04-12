@@ -33,6 +33,12 @@ You can configure all of this by logging into https://UHRR.local:8888/CONFIG
 If the original configuration is invalid or missing, this will automatically switch to the configuration page.
 
 
+Dependencies installation (example in a Debian system):
+
+apt-get install python3-tornado
+apt-get install python3-alsaaudio
+
+
 ![func_princ](https://user-images.githubusercontent.com/18350938/99989800-f3a06f00-2daa-11eb-9b45-d695b75904f7.png)
 
 ![sound_diagram](https://user-images.githubusercontent.com/18350938/99989819-fe5b0400-2daa-11eb-884f-c09341a03541.png)
