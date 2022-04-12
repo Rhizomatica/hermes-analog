@@ -375,6 +375,7 @@ class TRXRIG:
 		try:
 			print("TODO setMODE")
 			self.infos["MODE"] = "LSB"
+#                        print("MODE: ", MODE)
 #			self.rig.set_mode(Hamlib.rig_parse_mode(MODE))
 #			self.getMode()
 		except:
@@ -402,22 +403,26 @@ class TRXRIG:
 		except:
 			print("Could not obtain the current Strength signal RX level via Hamlib!")
 		return self.infos["StrgLVL"]
-		
+
 	def setPTT(self,status):
 		try:
 			if status == "true":
 				# self.rig.set_ptt(Hamlib.RIG_VFO_CURR,Hamlib.RIG_PTT_ON)
+				cmd = "ubitx_client -c ptt_on"
+				print(os.popen(cmd).read())
 				self.infos["PTT"]=True
 			else:
 				# self.rig.set_ptt(Hamlib.RIG_VFO_CURR,Hamlib.RIG_PTT_OFF)
+				cmd = "ubitx_client -c ptt_off"
+				print(os.popen(cmd).read())
 				self.infos["PTT"]=False
 		except:
 			print("Could not set the mode via Hamlib!")
 		return self.infos["PTT"]
-		
+
 	def getPTT(self,status):
 		return self.infos["PTT"]
-		
+
 	def setPower(self,status=1):
 		try:
 			if status:
