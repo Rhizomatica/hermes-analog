@@ -15,7 +15,7 @@ const IS_MOBILE = (function (a) {
 
 function bodyload(){
 	disableSFFC();
-	checkCookie();
+	// checkCookie();
 	if(IS_MOBILE)initformobile();
 }
 
