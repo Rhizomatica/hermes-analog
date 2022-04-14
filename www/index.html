@@ -205,11 +205,11 @@
 		</div>
 
 
-		<form id="SQUELCH_control">
+		<!-- <form id="SQUELCH_control">
 			SQL:<input oninput="if(poweron)drawRXSmeter();setCookie('SQUELCH', this.value, 180);"
 				onchange="if(poweron)drawRXSmeter();setCookie('SQUELCH', this.value, 180);" value="0" step="5"
 				type="range" id="SQUELCH" name="SQUELCH" min="0" max="100">
-		</form>
+		</form> -->
 
 		<!-- <form id="personalfrequency">
 			<label>Personal Freqs</label>
@@ -236,7 +236,8 @@
 
 		<div id="div-conf"><a href="/CONFIG" target="_UHRRconfig"><img src="img/config.png"></a></div>
 		<div id="div-panfft"><a
-				onclick="panfft = window.open( this.href, 'UHRRpanfft', 'width=1000, height=1000, menubar=no, toolbar=no, location=no, resizable=yes, scrollbars=no, status=no, dependent=yes'); return false;"
+				onclick="panfft = window.open( 
+					this.href, 'UHRRpanfft', 'width=1000, height=1000, menubar=no, toolbar=no, location=no, resizable=yes, scrollbars=no, status=no, dependent=yes');"
 				href="/panfft.html" target="_UHRRpanfft"><img src="img/panfft.png"></a></div>
 
 		<!-- <canvas id="canRXsmeter" width=250 height=50 ></canvas> -->
