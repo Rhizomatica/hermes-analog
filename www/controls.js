@@ -99,9 +99,9 @@ function powertogle()
 		checklatency();
 		poweron = true;
 		
-		canvasRXsmeter = document.getElementById("canRXsmeter");
-		ctxRXsmeter = canvasRXsmeter.getContext("2d");
-		initRXSmeter();
+//		canvasRXsmeter = document.getElementById("canRXsmeter");
+//		ctxRXsmeter = canvasRXsmeter.getContext("2d");
+//		initRXSmeter();
 		
 		button_light_all("div-filtershortcut");
 	}
@@ -389,7 +389,7 @@ function wsControlTRXcrtol( msg ){
 	if(words[0] == "PONG"){showlatency();}
 	else if(words[0] == "getFreq"){showTRXfreq(words[1]);TRXfrequency=parseInt(words[1]);if (typeof panfft !== 'undefined') {panfft.setcenterfrequency(words[1]);}}
 	else if(words[0] == "getMode"){showTRXmode(words[1]);}
-	else if(words[0] == "getSignalLevel"){SignalLevel=words[1];drawRXSmeter();}
+//	else if(words[0] == "getSignalLevel"){SignalLevel=words[1];drawRXSmeter();}
 	else if(words[0] == "panfft"){document.getElementById("div-panfft").style.display = "block";}
 }
 
@@ -505,15 +505,15 @@ function recall_hambands(){
 	if (wsControlTRX.readyState === WebSocket.OPEN) {wsControlTRX.send("setFreq:"+event.srcElement.getAttribute('v'));}
 }
 
-function initRXSmeter(){
-	ctxRXsmeter.beginPath();
-	ctxRXsmeter.lineWidth = 2;
-	ctxRXsmeter.strokeStyle = '#fffb16';
-	ctxRXsmeter.moveTo(SP[0], 0);
-	ctxRXsmeter.lineTo(SP[0], 50);
-	ctxRXsmeter.stroke();
-	document.getElementById("div-smeterdigitRX").innerHTML="S0";
-}
+//function initRXSmeter(){
+//	ctxRXsmeter.beginPath();
+//	ctxRXsmeter.lineWidth = 2;
+//	ctxRXsmeter.strokeStyle = '#fffb16';
+//	ctxRXsmeter.moveTo(SP[0], 0);
+//	ctxRXsmeter.lineTo(SP[0], 50);
+//	ctxRXsmeter.stroke();
+//	document.getElementById("div-smeterdigitRX").innerHTML="S0";
+//}
 
 var SP = {0:0,1:25,2:37,3:50,4:62,5:73,6:84,7:98,8:110,9:123,10:144,20:164,30:180,40:202,50:221,60:240};
 var RIG_LEVEL_STRENGTH = {0:-54,1:-48,2:-42,3:-36,4:-30,5:-24,6:-18,7:-12,8:-6,9:0,10:10,20:20,30:30,40:40,50:50,60:60};
