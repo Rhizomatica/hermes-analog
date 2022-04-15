@@ -348,7 +348,7 @@ class TRXRIG:
 			cmd = "ubitx_client -c get_frequency"
 			print(cmd)
 			cmd_output = os.popen(cmd).read()
-			print(cmd_output)
+			print("VFO: ", cmd_output)
 			self.infos["VFO"] = cmd_output
 			#self.infos["VFO"] = (self.rig.get_vfo())
 		except:
