@@ -37,7 +37,7 @@ Dependencies installation (example in a Debian system):
 
 apt-get install python3-tornado
 apt-get install python3-alsaaudio
-
+apt-get install python3-numpy
 
 ![func_princ](https://user-images.githubusercontent.com/18350938/99989800-f3a06f00-2daa-11eb-9b45-d695b75904f7.png)
 

@@ -207,7 +207,7 @@ class loadWavdata(threading.Thread):
 		ret=b''
 		while True:
 			while not flagWavstart:
-				time.sleep(0.5)
+				time.sleep(0.01)
 			l, ret = self.inp.read()
 			if l > 0:
 				for c in AudioRXHandlerClients:
