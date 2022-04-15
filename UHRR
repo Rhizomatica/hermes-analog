@@ -349,7 +349,7 @@ class TRXRIG:
 			print(cmd)
 			cmd_output = os.popen(cmd).read()
 			print("VFO: ", cmd_output)
-			self.infos["VFO"] = cmd_output
+			self.infos["VFO"] = cmd_output.strip()
 			#self.infos["VFO"] = (self.rig.get_vfo())
 		except:
 			print("Could not obtain the current VFO via Hamlib!")
