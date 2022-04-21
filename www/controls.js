@@ -16,6 +16,7 @@ const IS_MOBILE = (function (a) {
 function bodyload(){
 	disableSFFC();
 	// checkCookie();
+	get_freqfromcokkies();
 	if(IS_MOBILE)initformobile();
 }
 
@@ -103,7 +104,7 @@ function powertogle()
 //		ctxRXsmeter = canvasRXsmeter.getContext("2d");
 //		initRXSmeter();
 		
-		button_light_all("div-filtershortcut");
+		// button_light_all("div-filtershortcut"); 
 	}
 	else{
 		event.srcElement.src="img/poweroff.png";
@@ -111,7 +112,7 @@ function powertogle()
 		AudioTX_stop();
 		ControlTRX_stop();
 		poweron = false;
-		button_unlight_all("div-filtershortcut");
+		// button_unlight_all("div-filtershortcut");
 		button_unlight_all("div-mode_menu");
 		document.getElementById("div-panfft").style.display = "none";
 		if (typeof panfft !== 'undefined') {panfft.close();}

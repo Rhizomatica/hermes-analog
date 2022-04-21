@@ -38,11 +38,11 @@ overflow: hidden;
 }
 
 #div-princ {
-	margin: 20px auto;
+	margin: 0 auto;
 	width: 65%;
-	height: 825; 
+	height: 73vh; 
 	background-color:#171717;
-	box-shadow:5px 5px 5px 5px rgba(0, 0, 0, 0.5),0px 0px 0px 0px rgba(255, 255, 255, 0.5) inset;
+	/* box-shadow:5px 5px 5px 5px rgba(0, 0, 0, 0.5),0px 0px 0px 0px rgba(255, 255, 255, 0.5) inset; */
 	/* border-radius: 30px 30px 30px 30px ; */
 	position:relative
 }
@@ -51,7 +51,7 @@ overflow: hidden;
 {
 	position:absolute;
 	left:60px;
-	top:50px;
+	top:20px;
 	width:100px;
 	height:100px; 
 }
@@ -182,7 +182,7 @@ overflow: hidden;
 {
 	position:absolute;
 	left: 300px;
-	top:80px;
+	top:20px;
 	height: 200px; 
 	width:450px;
 }
@@ -261,7 +261,7 @@ overflow: hidden;
 {
 	position:absolute;
 	left: 920px;
-	top:700px;
+	top:600px;
 	width: 580px;
 }
 
@@ -315,8 +315,8 @@ overflow: hidden;
 {
 	font:normal bold 25px tahoma;
 	position:absolute;
-	left:1600px;
-	top:825px;
+	left:50px;
+	top:625px;
 }
 
 #div-latencymeter > img
@@ -385,18 +385,18 @@ div#Rxmeters div.value {
 #div-TX{
 	position:absolute;
 	left:300px;
-	top:590px;
+	top:460px;
 	width: 200px;
 	height: 200px;
 }
 #TX-record
 {
 	text-align:center;
-	font:normal bold 60px tahoma;
-	height:100px;
+	font:normal bold 40px tahoma;
+	height:50px;
 	width:100%;
 	display: inline-block;
-	padding-top: 20px;
+	padding: 10px;
 }
 
 #TX-record_record_opus
@@ -409,11 +409,11 @@ div#Rxmeters div.value {
 #TX-record-lock
 {
 	text-align:center;
-	font:normal bold 25px tahoma;
-	height:40px;
+	font:normal bold 20px tahoma;
+	height:30px;
 	width:100%;
 	display: inline-block;
-	padding-top: 10px;
+	padding: 10px;
 }
 
 #record_opus
@@ -427,9 +427,9 @@ div#Rxmeters div.value {
 #canBFSPC{
 	position:absolute;
 	left:300px;
-	top:320px;
+	top:260px;
 	width:425px; 
-	height:250px; 
+	height:150px; 
 	background:black;
 	background-color:black;
 	border-radius: 5px 5px 5px 5px;
@@ -439,9 +439,9 @@ div#Rxmeters div.value {
 #canBFFFT{
 	position:absolute;
 	left:730px;
-	top:320px;
+	top:260px;
 	width:425px; 
-	height:250px; 
+	height:150px; 
 	background:black;
 	background-color:black;
 	border-radius: 5px 5px 5px 5px;
@@ -486,7 +486,7 @@ div#Rxmeters div.value {
 	transform: rotate(-90deg);
 	position:absolute;
 	left: 270px;
-	top: 420px;
+	top: 310px;
 	z-index: 2;
 }
 
@@ -498,7 +498,7 @@ div#Rxmeters div.value {
 	transform: rotate(+90deg);
 	position:absolute;
 	left: 1030px;
-	top: 320px;
+	top: 210px;
 	z-index: 2;
 }
 
@@ -509,8 +509,8 @@ div#Rxmeters div.value {
 	transform-origin: 75px 75px;
 	transform: rotate(+180deg);
 	position:absolute;
-	left: 805px;
-	top: 450px;
+	left: 802px;
+	top: 280px;
 	z-index: 2;
 }
 
@@ -519,8 +519,8 @@ div#Rxmeters div.value {
 	height: 0px;
 	margin: 0;
 	position:absolute;
-	left: 505px;
-	top: 300px;
+	left: 502px;
+	top: 240px;
 	z-index: 2;
 }
 
@@ -537,8 +537,8 @@ div#Rxmeters div.value {
 #div-mode_menu 
 {
 	position:absolute;
-	left: 850px;
-	top:80px;
+	left: 900px;
+	top:20px;
 	width: 450px;
 	height:200px;
 }
