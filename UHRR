@@ -515,6 +515,7 @@ class WS_ControlTRX(tornado.websocket.WebSocketHandler):
 		if(action == "PING"):
 			self.write_message("PONG")
 			self.write_message("getFreq:"+str(CTRX.getFreq()))
+			self.write_message("getMode:"+str(CTRX.getMode()))
 		elif(action == "getFreq"):
 			yield self.send_to_all_clients("getFreq:"+str(CTRX.getFreq()))
 		elif(action == "setFreq"):
