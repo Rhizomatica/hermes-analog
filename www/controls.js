@@ -472,6 +472,7 @@ function rotatefreq(){
 }
 
 function showTRXfreq(freq){
+	freq = parseInt(freq);
 	freq=freq.toString();
 	while (freq.length < 9){freq="0"+freq;}
 	document.getElementById("cmhz").innerHTML=freq.substring(0, 1);
