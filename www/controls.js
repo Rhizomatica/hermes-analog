@@ -496,7 +496,7 @@ function sendTRXptt(stat){
 }	
 
 function showTRXmode(mode){
-	mode = mode.replace(/\L+/g, '')
+	mode = mode.replace(/[^a-zA-Z]+/g, '');
 	setAttr("div-mode_menu",mode);
 }
 
