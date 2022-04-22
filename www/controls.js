@@ -241,7 +241,7 @@ function AudioRX_stop()
 	audiobufferready = false;
 	wsAudioRX.close();
 	AudioRX_source_node.onaudioprocess = null
-	AudioRX_context.close();
+	AudioRX_context.state !== "closed" && AudioRX_context.close()
 }
 
 var muteRX=false;
@@ -1186,7 +1186,7 @@ function AudioTX_start()
 {
 isRecording = false;
 encode = false;
-document.getElementById("indwsAudioTX").innerHTML='<img src="img/critsgrey.png">wsTX';
+document.getElementById("indwsAudioTX").innerHTML='<img src="img/critsgrey.png">TX';
 wsAudioTX = new WebSocket( 'wss://' + window.location.href.split( '/' )[2] + '/WSaudioTX' );
 wsAudioTX.onopen = appendwsAudioTXOpen;
 wsAudioTX.onerror = appendwsAudioTXError;
@@ -1196,15 +1196,15 @@ mh = new MediaHandler( ap );
 }
 
 function appendwsAudioTXclose(){
-	document.getElementById("indwsAudioTX").innerHTML='<img src="img/critsred.png">wsTX';
+	document.getElementById("indwsAudioTX").innerHTML='<img src="img/critsred.png">TX';
 }
 
 function appendwsAudioTXOpen(){
-	document.getElementById("indwsAudioTX").innerHTML='<img src="img/critsgreen.png">wsTX';
+	document.getElementById("indwsAudioTX").innerHTML='<img src="img/critsgreen.png">TX';
 }
 
 function appendwsAudioTXError(err){
-	document.getElementById("indwsAudioTX").innerHTML='<img src="img/critsred.png">wsTX';
+	document.getElementById("indwsAudioTX").innerHTML='<img src="img/critsred.png">TX';
     wsAudioTX.close();
 	AudioTX_start();
 }

@@ -1,14 +1,28 @@
+@font-face {
+    font-family: "Rubik";
+    src: url("/www/fonts/Rubik-Light.woff2") format("woff"),
+}
+
+@font-face {
+    font-family: "Rubik-regular";
+    src: url("/www/fonts/Rubik-Regular.woff2") format("woff"),
+}
+
 body {
 	color: white;
-	font:normal bold 14px tahoma;
+	font-size: 14px;
+	font-weight: bold;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+	font-family: 'Rubik', sans-serif;
+
 	/* overflow: hidden; */
 }
+
 
 #ombre-body{
 display: none;
@@ -25,35 +39,30 @@ cursor: default;
 #pop-upspinner{
 display: none;
 position: fixed;
-left: calc(55% - 100px);
-top: 45%;
+left: calc(50% - 100px);
+top: 50%;
 z-index: 2000;
 cursor: default;
 overflow: hidden;
 }
 
-#pop-upspinner img{
-	width: 80px;
-
-}
-
 #div-princ {
-	margin: 0 auto;
-	width: 65%;
-	height: 73vh; 
+	margin: 20px auto;
+	width: 1800px;
+	height: 860px; 
 	background-color:#171717;
-	/* box-shadow:5px 5px 5px 5px rgba(0, 0, 0, 0.5),0px 0px 0px 0px rgba(255, 255, 255, 0.5) inset; */
-	/* border-radius: 30px 30px 30px 30px ; */
+	box-shadow:5px 5px 5px 5px rgba(0, 0, 0, 0.5),0px 0px 0px 0px rgba(255, 255, 255, 0.5) inset;
+	border-radius: 30px 30px 30px 30px ;
 	position:relative
 }
 
 #button_power
 {
 	position:absolute;
-	left:60px;
-	top:20px;
-	width:100px;
-	height:100px; 
+	left:105px;
+	top:105px;
+	width:150px;
+	height:150px; 
 }
 
 .button_pressed{
@@ -86,27 +95,33 @@ overflow: hidden;
 
 #callsign{
 	position:absolute;
-	left: 1250px;
+	left: 1450px;
 	top:20px;
 	height:80px; 
 	width:300px;
-	font: normal bold 25px tahoma;
+	/* font: normal bold 25px; */
+	font-size: 25px;
+	font-weight: bold;
+	font-family: 'Rubik', sans-serif;
 	text-align:center;
 }
 
 #callsign > a > img{
-	height:15px; 
-	width:15px;
+	height:25px; 
+	width:25px;
 }
 
 #personalfrequency
 {
 	position:absolute;
-	left: 850px;
-	top:520px;
+	left: 1450px;
+	top:420px;
 	height:110px; 
-	width:200px;
-	font: normal bold 25px tahoma;
+	width:300px;
+	/* font: normal bold 25px; */
+	font-size: 25px;
+	font-weight: bold;
+	font-family: 'Rubik', sans-serif;
 	text-align:center;
 	margin:0px;
 	padding:0px;
@@ -115,14 +130,17 @@ overflow: hidden;
 #personalfrequency > select
 {
 	width:300px;
-	font: normal bold 25px tahoma;
+	/* font: normal bold 25px; */
+	font-size: 25px;
+	font-weight: bold;
+	font-family: 'Rubik', sans-serif;
 }
 
 #div-bandshortcut 
 {
 	position:absolute;
-	left: 850px;
-	top:350px;
+	left: 1450px;
+	top:250px;
 	width: 300px;
 }
 
@@ -135,7 +153,10 @@ overflow: hidden;
 
 #div-bandshortcut > ul > li {
     display: inline-block;
-	font:normal bold 25px tahoma;
+	/* font:normal bold 25px; */
+	font-size: 25px;
+	font-weight: bold;
+	font-family: "Rubik", sans-serif;
     text-align:center;
 	width:32%;
 }
@@ -155,8 +176,8 @@ overflow: hidden;
 #div-filtershortcut
 {
 	position:absolute;
-	left: 310px;
-	top:650px;
+	left: 425px;
+	top:600px;
 	width: 450px;
 	height:200px;
 }
@@ -172,7 +193,10 @@ overflow: hidden;
 
 #div-filtershortcut > ul > li {
     display: inline-block;
-	font:normal bold 25px tahoma;
+	/* font:normal bold 25px; */
+	font-size: 25px;
+	font-weight: bold;
+	font-family: 'Rubik', sans-serif;
     text-align:center;
 	width:32%;
 }
@@ -181,15 +205,18 @@ overflow: hidden;
 #div-freq
 {
 	position:absolute;
-	left: 300px;
-	top:20px;
+	left: 425px;
+	top:80px;
 	height: 200px; 
 	width:450px;
 }
 
 #div-freq > ul > li {
     display: inline-block;
-	font:normal bold 37px tahoma;
+	/* font:normal bold 37px; */
+	font-size: 37px;
+	font-weight: bold;
+	font-family: "Rubik", sans-serif;
     text-align:center;
 	width:8%;
 }
@@ -209,7 +236,10 @@ overflow: hidden;
 
 #freq_disp > ul > li {
     display: inline-block;
-	font:normal bold 14px tahoma;
+	/* font:normal bold 14px; */
+	font-size: 14px;
+	font-weight: bold;
+	font-family: "Rubik", sans-serif;
     text-align:center;
 }
 
@@ -226,7 +256,10 @@ overflow: hidden;
     vertical-align: middle;
     height: 100%; 
 	width:100%;
-	font:normal bold 45px tahoma;
+	/* font:normal bold 45px; */
+	font-size: 45px;
+	font-weight: bold;
+	font-family: "Rubik", sans-serif;
     text-align:center; 	
 	display:none;
 }
@@ -240,7 +273,10 @@ overflow: hidden;
 
 #freq_but > ul > li {
     display: inline-block;
-	font:normal bold 14px tahoma;
+	/* font:normal bold 14px; */
+	font-size: 14px;
+	font-weight: bold;
+	font-family: "Rubik", sans-serif;
     text-align:center;
 	margin-top:5px;
 	margin-bottom:5px;
@@ -260,15 +296,18 @@ overflow: hidden;
 #div-scoketscontrols 
 {
 	position:absolute;
-	left: 920px;
-	top:600px;
+	left: 1100px;
+	top:800px;
 	width: 580px;
 }
 
 #div-scoketscontrols > p
 {
 	display: inline-block;
-	font:normal bold 25px tahoma;
+	/* font:normal bold 25px; */
+	font-size: 25px;
+	font-weight: bold;
+	font-family: "Rubik", sans-serif;
     text-align:center;
 	margin-right:10px;
 }
@@ -298,7 +337,7 @@ overflow: hidden;
 #div-panfft
 {
 	position:absolute;
-	left: 1050px;
+	left: 1750px;
 	top:55px;
 	width: 580px;
 	display: none;
@@ -307,16 +346,19 @@ overflow: hidden;
 #div-panfft > a > img
 {
 	margin-right:5px;
-	width:15px; 
-	height:15px;
+	width:25px; 
+	height:25px;
 }
 
 #div-latencymeter
 {
-	font:normal bold 25px tahoma;
+	/* font:normal bold 25px; */
+	font-size: 25px;
+	font-weight: bold;
+	font-family: "Rubik", sans-serif;
 	position:absolute;
-	left:50px;
-	top:625px;
+	left:1600px;
+	top:825px;
 }
 
 #div-latencymeter > img
@@ -328,22 +370,29 @@ overflow: hidden;
 
 #RX-GAIN_control
 {
-	width:240px; 
+	width:300px; 
 	height:140px;
 	position:absolute;
-	/* left:00px; */
-	top:200px;
-	font:normal bold 25px tahoma;
+	left:50px;
+	top:300px;
+	/* font:normal bold 25px; */
+	font-size: 25px;
+	font-weight: bold;
+	font-family: 'Rubik', sans-serif;
 	text-align:center;
 }
 
 div#Txmeters > div {
 	text-align:center;
-	width:240px; 
+	width:300px; 
   	position:absolute;
-	/* left: 50px; */
-	top:300px;
-	font:normal bold 25px tahoma;
+	left: 50px;
+	top:600px;
+	/* font:'Rubik' normal bold 25px; */
+	font-size: 25px;
+	font-weight: bold;
+	font-family: 'Rubik', sans-serif;
+
 }
 
 div#Txmeters div.label {
@@ -356,11 +405,14 @@ div#Txmeters div.value {
 
 div#Rxmeters > div {
 	text-align:center;
-	width:240px; 
+	width:300px; 
   	position:absolute;
-	/* left: 50px; */
+	left: 50px;
 	top:380px;
-	font:normal bold 25px tahoma;
+	/* font:normal bold 25px; */
+	font-size: 25px;
+	font-weight: bold;
+	font-family: "Rubik", sans-serif;
 }
 
 div#Rxmeters div.label {
@@ -373,47 +425,56 @@ div#Rxmeters div.value {
 
 #TX-GAIN_control
 {
-	width:240px; 
+	width:300px; 
 	height:140px;
 	position:absolute;
-	/* left:50px; */
-	top:490px;
-	font:normal bold 25px tahoma;
+	left:50px;
+	top:530px;
+	/* font:normal bold 25px; */
+	font-size: 25px;
+	font-weight: bold;
+	font-family: "Rubik", sans-serif;
 	text-align:center;
 }
 
 #div-TX{
 	position:absolute;
-	left:300px;
-	top:460px;
-	width: 200px;
+	left:1450px;
+	top:590px;
+	width: 300px;
 	height: 200px;
 }
 #TX-record
 {
 	text-align:center;
-	font:normal bold 40px tahoma;
-	height:50px;
+	/* font:normal bold 90px; */
+	font-weight: bold;
+	font-size: 90px;
+	font-family: "Rubik", sans-serif;
+	height:140px;
 	width:100%;
 	display: inline-block;
-	padding: 10px;
 }
 
 #TX-record_record_opus
 {
-	font:normal bold 10px tahoma;
+	/* font:normal bold 10px; */
+	font-size: 10px;
+	font-weight: bold;
+	font-family: "Rubik", sans-serif;
 	text-align:center;
-
 }
 
 #TX-record-lock
 {
 	text-align:center;
-	font:normal bold 20px tahoma;
-	height:30px;
+	/* font:normal bold 25px; */
+	font-size: 25px;
+	font-weight: bold;
+	font-family: "Rubik", sans-serif;
+	height:50px;
 	width:100%;
 	display: inline-block;
-	padding: 10px;
 }
 
 #record_opus
@@ -426,10 +487,10 @@ div#Rxmeters div.value {
 
 #canBFSPC{
 	position:absolute;
-	left:300px;
-	top:260px;
-	width:425px; 
-	height:150px; 
+	left:425px;
+	top:320px;
+	width:450px; 
+	height:250px; 
 	background:black;
 	background-color:black;
 	border-radius: 5px 5px 5px 5px;
@@ -438,10 +499,10 @@ div#Rxmeters div.value {
 
 #canBFFFT{
 	position:absolute;
-	left:730px;
-	top:260px;
-	width:425px; 
-	height:150px; 
+	left:950px;
+	top:320px;
+	width:450px; 
+	height:250px; 
 	background:black;
 	background-color:black;
 	border-radius: 5px 5px 5px 5px;
@@ -485,8 +546,8 @@ div#Rxmeters div.value {
 	transform-origin: 75px 75px;
 	transform: rotate(-90deg);
 	position:absolute;
-	left: 270px;
-	top: 310px;
+	left: 940px;
+	top: 420px;
 	z-index: 2;
 }
 
@@ -497,8 +558,8 @@ div#Rxmeters div.value {
 	transform-origin: 75px 75px;
 	transform: rotate(+90deg);
 	position:absolute;
-	left: 1030px;
-	top: 210px;
+	left: 1260px;
+	top: 320px;
 	z-index: 2;
 }
 
@@ -509,8 +570,8 @@ div#Rxmeters div.value {
 	transform-origin: 75px 75px;
 	transform: rotate(+180deg);
 	position:absolute;
-	left: 802px;
-	top: 280px;
+	left: 1250px;
+	top: 430px;
 	z-index: 2;
 }
 
@@ -519,8 +580,8 @@ div#Rxmeters div.value {
 	height: 0px;
 	margin: 0;
 	position:absolute;
-	left: 502px;
-	top: 240px;
+	left: 950px;
+	top: 310px;
 	z-index: 2;
 }
 
@@ -537,8 +598,8 @@ div#Rxmeters div.value {
 #div-mode_menu 
 {
 	position:absolute;
-	left: 900px;
-	top:20px;
+	left: 950px;
+	top:80px;
 	width: 450px;
 	height:200px;
 }
@@ -553,7 +614,10 @@ div#Rxmeters div.value {
 
 #div-mode_menu > ul > li {
     display: inline-block;
-	font: normal bold 45px tahoma;
+	/* font: normal bold 45px; */
+	font-size: 45px;
+	font-weight: bold;
+	font-family: "Rubik", sans-serif;
 }
 
 #div-mode_menu > ul > li:before{
@@ -564,7 +628,7 @@ div#Rxmeters div.value {
 }
 
 .button_mode{
-	width:122px;
+	width:222px;
 	height: 65px; 	
 	text-align:center;	
 }
@@ -572,9 +636,9 @@ div#Rxmeters div.value {
 
 #canRXsmeter{
 	position:absolute;
-	left:1280px;
+	left:1475px;
 	top:80px;
-	width:230px; 
+	width:250px; 
 	height:50px; 
 	background:black;
 	background-color:black;
@@ -586,10 +650,13 @@ div#Rxmeters div.value {
 #div-smeterdigitRX
 {
 	position:absolute;
-	left:1275px;
+	left:1475px;
 	top:140px;
 	text-align:center;
-	font: normal bold 25px tahoma;
+	/* font: normal bold 25px; */
+	font-size: 25px;
+	font-weight: bold;
+	font-family: "Rubik", sans-serif;
 	width: 250px;
 }
 
@@ -600,9 +667,12 @@ div#Rxmeters div.value {
 	width:300px; 
 	height:70px;
 	position:absolute;
-	left:800px;
-	top:200px;
-	font:normal bold 25px tahoma;
+	left:1450px;
+	top:180px;
+	/* font:normal bold 25px; */
+	font-size: 25px;
+	font-weight: bold;
+	font-family: "Rubik", sans-serif;
 	text-align:center;
 }
 
