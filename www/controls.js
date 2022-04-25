@@ -629,8 +629,8 @@ function get_freqfromcokkies(itemselected=""){
 
 	var length = 0;
 
-	if(x.options)
-		var length = x.options.length;
+	if(x && x.options)
+		length = x.options.length;
 	
 	for (i = length-1; i >= 0; i--) {
 	  x.options[i] = null;
