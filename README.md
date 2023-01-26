@@ -1,5 +1,9 @@
-# Universal_HamRadio_Remote_HTML5
-Universal HamRadio Remote HTML5 interface.  
+# hermes-analog
+
+Hermes-analog is the implementation of analog audio support for HERMES. It is based on Universal HamRadio Remote HTML5 interface.
+
+# UHRR README
+
 This is an implementation of a python server and HTML5 frontend to provide a web interface to use your TRX for both RX and TX.  
 You can use basic and some advanced functions of your radio.  
 You use the speaker and microphone of your computer to communicate.  
