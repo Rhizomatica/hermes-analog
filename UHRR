@@ -345,7 +345,7 @@ class TRXRIG:
 		
 	def getvfo(self):
 		try:
-			cmd = "ubitx_client -c get_frequency"
+			cmd = "sbitx_client -c get_frequency -p 1"
 			print(cmd)
 			cmd_output = os.popen(cmd).read()
 			print("VFO: ", cmd_output)
@@ -357,7 +357,7 @@ class TRXRIG:
 
 	def setFreq(self,frequency):
 		try:
-			cmd = "ubitx_client -c set_frequency -a "+frequency
+			cmd = "sbitx_client -c set_frequency -a "+frequency+" -p 1"
 			print(cmd)
 			cmd_output = os.popen(cmd).read()
 			print(cmd_output)
@@ -369,7 +369,7 @@ class TRXRIG:
 		
 	def getFreq(self):
 		try:
-			cmd = "ubitx_client -c get_frequency"
+			cmd = "sbitx_client -c get_frequency -p 1"
 			print(cmd)
 			cmd_output = os.popen(cmd).read()
 			print(cmd_output)
@@ -383,22 +383,22 @@ class TRXRIG:
 			self.infos["MODE"] = MODE.strip()
 			print("MODE: ", self.infos["MODE"])
 			if self.infos["MODE"] == "LSB":
-				cmd = "ubitx_client -c set_mode -a LSB"
+				cmd = "sbitx_client -c set_mode -a LSB -p 1"
 				cmd_output = os.popen(cmd).read()
 				print(cmd_output)
 			if self.infos["MODE"] == "USB":
-				cmd = "ubitx_client -c set_mode -a USB"
+				cmd = "sbitx_client -c set_mode -a USB -p 1"
 				cmd_output = os.popen(cmd).read()
 				print(cmd_output)
 #			self.rig.set_mode(Hamlib.rig_parse_mode(MODE))
 			self.getMode()
 		except:
-			print("Could not set the mode via Hamlib!")
+			print("Could not set the mode via sbitx_client!")
 		return self.infos["MODE"]
 
 	def getMode(self):
 		try:
-			cmd = "ubitx_client -c get_mode"
+			cmd = "sbitx_client -c get_mode -p 1"
 			cmd_output = os.popen(cmd).read()
 			print(cmd_output)
 			self.infos["MODE"] = cmd_output
@@ -424,13 +424,13 @@ class TRXRIG:
 		try:
 			if status == "true":
 				# self.rig.set_ptt(Hamlib.RIG_VFO_CURR,Hamlib.RIG_PTT_ON)
-				cmd = "ubitx_client -c ptt_on"
+				cmd = "sbitx_client -c ptt_on"
 				cmd_output = os.popen(cmd).read()
 				print(cmd_output)
 				self.infos["PTT"]=True
 			else:
 				# self.rig.set_ptt(Hamlib.RIG_VFO_CURR,Hamlib.RIG_PTT_OFF)
-				cmd = "ubitx_client -c ptt_off"
+				cmd = "sbitx_client -c ptt_off"
 				cmd_output = os.popen(cmd).read()
 				print(cmd_output)
 				self.infos["PTT"]=False
@@ -439,7 +439,7 @@ class TRXRIG:
 		return self.infos["PTT"]
 
 	def getPTT(self,status):
-		cmd = "ubitx_client -c get_txrx_status"
+		cmd = "sbitx_client -c get_txrx_status"
 		cmd_output = os.popen(cmd).read()
 		print(cmd_output)
 		if cmd_output == "INRX":
@@ -452,9 +452,15 @@ class TRXRIG:
 		try:
 			if status:
 				self.infos["powerstat"] = True
-#				self.rig.set_powerstat(Hamlib.RIG_POWER_ON)
+			        cmd = "sbitx_client -c set_profile -a 1"
+			        print(cmd)
+			        cmd_output = os.popen(cmd).read()
+                                #				self.rig.set_powerstat(Hamlib.RIG_POWER_ON)
 			else:
 				self.infos["powerstat"] = False
+#                               cmd = "sbitx_client -c set_profile -a 0"
+#			        print(cmd)
+#			        cmd_output = os.popen(cmd).read()
 #				self.rig.set_powerstat(Hamlib.RIG_POWER_OFF)
 #			self.infos["powerstat"] = status
 		except:
