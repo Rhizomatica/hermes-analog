@@ -345,7 +345,7 @@ class TRXRIG:
 		
 	def getvfo(self):
 		try:
-			cmd = "sbitx_client -c get_frequency -p 1"
+			cmd = "sbitx_client -c get_frequency -p 0"
 			print(cmd)
 			cmd_output = os.popen(cmd).read()
 			print("VFO: ", cmd_output)
@@ -357,7 +357,7 @@ class TRXRIG:
 
 	def setFreq(self,frequency):
 		try:
-			cmd = "sbitx_client -c set_frequency -a "+frequency+" -p 1"
+			cmd = "sbitx_client -c set_frequency -a "+frequency+" -p 0"
 			print(cmd)
 			cmd_output = os.popen(cmd).read()
 			print(cmd_output)
@@ -369,7 +369,7 @@ class TRXRIG:
 		
 	def getFreq(self):
 		try:
-			cmd = "sbitx_client -c get_frequency -p 1"
+			cmd = "sbitx_client -c get_frequency -p 0"
 			print(cmd)
 			cmd_output = os.popen(cmd).read()
 			print(cmd_output)
@@ -383,11 +383,11 @@ class TRXRIG:
 			self.infos["MODE"] = MODE.strip()
 			print("MODE: ", self.infos["MODE"])
 			if self.infos["MODE"] == "LSB":
-				cmd = "sbitx_client -c set_mode -a LSB -p 1"
+				cmd = "sbitx_client -c set_mode -a LSB -p 0"
 				cmd_output = os.popen(cmd).read()
 				print(cmd_output)
 			if self.infos["MODE"] == "USB":
-				cmd = "sbitx_client -c set_mode -a USB -p 1"
+				cmd = "sbitx_client -c set_mode -a USB -p 0"
 				cmd_output = os.popen(cmd).read()
 				print(cmd_output)
 #			self.rig.set_mode(Hamlib.rig_parse_mode(MODE))
@@ -398,7 +398,7 @@ class TRXRIG:
 
 	def getMode(self):
 		try:
-			cmd = "sbitx_client -c get_mode -p 1"
+			cmd = "sbitx_client -c get_mode -p 0"
 			cmd_output = os.popen(cmd).read()
 			print(cmd_output)
 			self.infos["MODE"] = cmd_output
@@ -452,9 +452,9 @@ class TRXRIG:
 		try:
 			if status:
 				self.infos["powerstat"] = True
-				cmd = "sbitx_client -c set_profile -a 1"
-				print(cmd)
-				cmd_output = os.popen(cmd).read()
+#				cmd = "sbitx_client -c set_profile -a 1"
+#				print(cmd)
+#				cmd_output = os.popen(cmd).read()
                                 #				self.rig.set_powerstat(Hamlib.RIG_POWER_ON)
 			else:
 				self.infos["powerstat"] = False
