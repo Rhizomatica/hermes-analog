@@ -452,9 +452,9 @@ class TRXRIG:
 		try:
 			if status:
 				self.infos["powerstat"] = True
-			        cmd = "sbitx_client -c set_profile -a 1"
-			        print(cmd)
-			        cmd_output = os.popen(cmd).read()
+				cmd = "sbitx_client -c set_profile -a 1"
+				print(cmd)
+				cmd_output = os.popen(cmd).read()
                                 #				self.rig.set_powerstat(Hamlib.RIG_POWER_ON)
 			else:
 				self.infos["powerstat"] = False
